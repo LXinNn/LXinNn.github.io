@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/guide/hello-world</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<span id="more"></span>
+
+
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>guide</category>
+      </categories>
+      <tags>
+        <tag>hello-world</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>first hexo blog</title>
+    <url>/java/first-hexo-blog</url>
+    <content><![CDATA[<h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><h2 id="jvm基础"><a href="#jvm基础" class="headerlink" title="jvm基础"></a>jvm基础</h2><h3 id="jvm从编码到执行"><a href="#jvm从编码到执行" class="headerlink" title="jvm从编码到执行"></a>jvm从编码到执行</h3><p><img src="C:\Users\14660\Desktop\笔记\从编码到执行.png" alt="从编码到执行"></p>
+<blockquote>
+<p>解释（字节码解释器）和编译（JIT即时编译器）可以同时进行</p>
+</blockquote>
+<p><strong>jvm与java没关系，只与class有关，只是一种规范，能转化为class的都能用jvm。</strong></p>
+<span id="more"></span>
+
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><h4 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h4><p>保存的是原始值：byte、short、int、long、char、float、double、Boolean、returnAddress</p>
+<h4 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h4><p>  <img src="C:\Users\14660\Desktop\笔记\引用.png"></p>
+<h4 id="对象的内存布局"><a href="#对象的内存布局" class="headerlink" title="对象的内存布局"></a>对象的内存布局</h4><p>Mark Word(锁的信息、GC的信息、原始HashCode) 8字节，类型指针（clazzpointer）4-8字节,数组长度占4字节。调用对象时会改变HashCode。</p>
+<blockquote>
+<p>在堆中，32位对象引用占4字节，64位对象引用占8字节</p>
+<p>堆<strong>内存小于4G</strong>时，不需要启用指针压缩，jvm会直接去除高32位地址，即使用低虚拟地址空间</p>
+<p>当<strong>内存低于32G</strong>时可以压缩指针，使用32位的oop（“ordinary object pointer” 普通对象指针）即4字节</p>
+<p><strong>因为在32位可以表示2的32次个地址，而JVM将堆进行了8字节划分，也就是一个内存地址一个内存地址对应8字节内存块，所以2的32乘以8byte得到32GB，</strong></p>
+<p>启用CompressOops后，会压缩的对象：</p>
+<ul>
+<li>每个Class的属性指针（静态成员变量）</li>
+<li>每个对象的属性指针</li>
+<li>普通对象数组的每个元素指针</li>
+</ul>
+<p>HotSpot VM中</p>
+<ul>
+<li><p>用于表示Java类的数据结构是不会压缩的，这部分数据都存放在永久代（PermGen）中。</p>
+</li>
+<li><p>在解释器中，一般对象指针也是不压缩的，包括JVM本地变量和栈内元素、调用参数、返回值等。解释器会在读取堆内对象时解码对象指针，并在存入时进行编码。</p>
+</li>
+<li><p>同样，方法调用序列（method calling sequence），无论是解释执行还是编译执行，都不会使用对象指针压缩。</p>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>上锁就是修改对象的MarkWord</strong></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">实例数据：</span><br><span class="line">    byte：1B</span><br><span class="line">    short：2B</span><br><span class="line">    int：4B</span><br><span class="line">    long：8B</span><br><span class="line">    <span class="built_in">float</span>：4B</span><br><span class="line">    double：8B</span><br><span class="line">    boolean：1B</span><br><span class="line">    char：2B</span><br><span class="line">    引用类型：</span><br><span class="line">        开启指针压缩 ：4B</span><br><span class="line">        关闭指针压缩 ：8B</span><br></pre></td></tr></table></figure>
+
+<p><img src="C:\Users\14660\Desktop\笔记\对象.png"></p>
+<h3 id="堆（数据结构）和栈（逻辑、算法）"><a href="#堆（数据结构）和栈（逻辑、算法）" class="headerlink" title="堆（数据结构）和栈（逻辑、算法）"></a>堆（数据结构）和栈（逻辑、算法）</h3><blockquote>
+<p>栈是运行时的单位，堆是存储的单位</p>
+</blockquote>
+<p>在Java中一个线程就会相应有一个线程栈与之对应，这点很容易理解，因为不同的线程执行逻辑有所不同，因此需要一个独立的线程栈。而堆则是所有线程共享的。栈因为是运行单位，因此里面存储的信息都是跟当前线程（或程序）相关信息的。包括局部变量、程序运行状态、方法返回值等等；而堆只负责存储对象信息</p>
+<blockquote>
+<p>java中main函数就是栈的起点，也是程序的起始点</p>
+</blockquote>
+<p><strong>堆中存的是对象，栈中存的是基本数据类型（长度固定，无需存堆中）和堆中对象的引用</strong></p>
+<h4 id="java中参数的传递"><a href="#java中参数的传递" class="headerlink" title="java中参数的传递"></a>java中参数的传递</h4><blockquote>
+<p>java里参数传递都是按值传递</p>
+</blockquote>
+<p><strong>按值传递是传递的值的拷贝(只影响复制品)，按引用传递其实传递的是引用的地址值的拷贝(会影响原始对象，地址值不变)，所以统称按值传递。</strong></p>
+<p>在Java里面只有<strong>基本类型</strong>和按照下面这种定义方式的String是按值传递，其它的都是按引用传递。<br><strong>String str &#x3D; “Java”;</strong></p>
+<h4 id="java对象的大小"><a href="#java对象的大小" class="headerlink" title="java对象的大小"></a>java对象的大小</h4><blockquote>
+<p>Java在给对象内存分配时都是以8的整数倍来分</p>
+</blockquote>
+<p>在Java中，一个空Object对象的大小是8byte，这个大小只是保存堆中一个没有任何属性的对象的大小。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Object</span> <span class="variable">ob</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br></pre></td></tr></table></figure>
+
+<p>栈中保存引用：4byte;</p>
+<p>堆中的对象信息：8byte.</p>
+<p>基本类型的包装类型的大小，因为这种包装类型已经成为对象了，因此需要把他们作为对象来看待。包装类型的大小至少是12byte（声明一个空Object至少需要的空间），而且12byte没有包含任何有效信息，同时，因为Java对象大小是8的整数倍，因此一个基本类型包装类的大小至少是16byte。这个内存占用是很恐怖的，它是使用基本类型的N倍（N&gt;2）。因此，可能的话应尽量少使用包装类。在JDK5.0以后，因为加入了自动类型装换，因此，Java虚拟机会在存储方面进行相应的优化。</p>
+<h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h3><h4 id="类加载过程（双亲委派）"><a href="#类加载过程（双亲委派）" class="headerlink" title="类加载过程（双亲委派）"></a>类加载过程（双亲委派）</h4><p><img src="C:\Users\14660\Desktop\笔记\类加载器.png"></p>
+<p><img src="C:\Users\14660\Desktop\笔记\类加载过程.png"></p>
+<blockquote>
+<p><strong>双亲委派（子到父，父到子）</strong>：classloader自底向上检查该类是否已加载，然后自顶向下进行实际查找和加载。</p>
+<p>原因：为了安全，限制每一层的权限，另外防止重复加载浪费资源。</p>
+</blockquote>
+<p><strong>并不是继承，而是每个类加载器里都有一个成员变量parent</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> ClassLoader parent;</span><br><span class="line"><span class="comment">// 自定义类加载器在不指定parent时默认是SystemClassLoader</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//在初始化时，可以强制设置父类加载器</span></span><br><span class="line"><span class="keyword">protected</span> <span class="title function_">ClassLoader</span><span class="params">(ClassLoader parent)</span> &#123;  </span><br><span class="line">    <span class="type">SecurityManager</span> <span class="variable">security</span> <span class="operator">=</span> System.getSecurityManager();  </span><br><span class="line">    <span class="keyword">if</span> (security != <span class="literal">null</span>) &#123;  </span><br><span class="line">        security.checkCreateClassLoader();  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="comment">//强制设置父类加载器  </span></span><br><span class="line">    <span class="built_in">this</span>.parent = parent;  </span><br><span class="line">    initialized = <span class="literal">true</span>;   </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="类加载器的范围（Launcher源码）"><a href="#类加载器的范围（Launcher源码）" class="headerlink" title="类加载器的范围（Launcher源码）"></a>类加载器的范围（Launcher源码）</h4><p><strong>Bootstrap Loader</strong>是由C++撰写而成，预设上它负责搜寻<strong>JRE所在目录的classes或lib目录下的.jar档案</strong>中(例如rt.jar)是否有指定的类别并加载(实际上是由系统参数<strong>sun.boot.class.path</strong>指定)；</p>
+<p><strong>ExtClassLoader</strong>负责搜寻<strong>JRE所在目录的lib&#x2F;ext</strong> 目录下的classes或.jar中是否有指定的类别并加载(实际上是由系统参数<strong>java.ext.dirs</strong>指定)；</p>
+<p><strong>AppClassLoader</strong>则搜寻 Classpath中是否有指定的classes并加载(由系统参数<strong>java.class.path</strong>指定)。</p>
+<p>Bootstrap Loader会在JVM启动之后载入，<strong>之后它会载入ExtClassLoader</strong>并将ExtClassLoader的<strong>parent设为Bootstrap Loader</strong>，然后<strong>BootstrapLoader再加载AppClassLoader，并将AppClassLoader的parent设定为 ExtClassLoader。</strong></p>
+<h4 id="类加载源码分析"><a href="#类加载源码分析" class="headerlink" title="类加载源码分析"></a>类加载源码分析</h4><p>在加载类别时，<strong>每个类别加载器会先将加载类别的任务交由其parent，如果parent找不到，才由自己负责加载，如果自己也找不到，就会丢出 NoClassDefFoundError（运行时，编译时ClassNotFoundException）。</strong></p>
+<blockquote>
+<p>方法 loadClass()抛出的是 java.lang.ClassNotFoundException异常；方法 defineClass()抛出的是 java.lang.NoClassDefFoundError异常。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 首先检查是否已经加载了</span></span><br><span class="line">    Class&lt;?&gt; c = findLoadedClass(name);</span><br><span class="line">    <span class="keyword">if</span> (c == <span class="literal">null</span>) &#123;</span><br><span class="line">         <span class="type">long</span> <span class="variable">t0</span> <span class="operator">=</span> System.nanoTime();</span><br><span class="line">         <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 类似递归，让父加载器继续找</span></span><br><span class="line">             <span class="keyword">if</span> (parent != <span class="literal">null</span>) &#123;</span><br><span class="line">                c = parent.loadClass(name, <span class="literal">false</span>);</span><br><span class="line">             &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                c = findBootstrapClassOrNull(name);</span><br><span class="line">            &#125;</span><br><span class="line">         &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (c == <span class="literal">null</span>) &#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 父加载器都找不到，用自己的findClass方法</span></span><br><span class="line">            <span class="type">long</span> <span class="variable">t1</span> <span class="operator">=</span> System.nanoTime();</span><br><span class="line">             c = findClass(name);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line"><span class="comment">// findClass方法</span></span><br><span class="line">     <span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="keyword">throws</span> ClassNotFoundException&#123;</span><br><span class="line">         <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ClassNotFoundException</span>(name);</span><br><span class="line">     &#125;</span><br><span class="line">      </span><br><span class="line"><span class="comment">/*自定义时重写，找到待加载类，以二进制读进来，用defineClass转换为class对象*/</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">final</span> Class&lt;?&gt; defineClass(String name, <span class="type">byte</span>[] b, <span class="type">int</span> off, <span class="type">int</span> len)</span><br><span class="line">    <span class="keyword">throws</span> ClassFormatError    <span class="comment">//off起始位置，len结束</span></span><br></pre></td></tr></table></figure>
+
+<p>每一个类别被载入后，*<em>都会有一个Class的实例来代表它，每个Class的实例都会记得是哪个ClassLoader加载它的，可以由Class的getClassLoader()取得加载该类别的ClassLoader。</em></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 手动调用类加载器加载所需类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LoadClass</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFountException&#123;</span><br><span class="line">        <span class="type">Class</span> <span class="variable">c</span> <span class="operator">=</span> LoadClass.class.getClassLoader().loadclass(<span class="string">&quot;想要加载的类名&quot;</span>);</span><br><span class="line">        System.out.println(c.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//import //导入待加载类路径</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">zidingyiClassLoader</span> <span class="keyword">extends</span> <span class="title class_">ClassLoader</span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="keyword">throws</span> ClassNotFoundException&#123;</span><br><span class="line">        <span class="type">File</span> <span class="variable">f</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;c:/Users/14660/IdeaProjects/&quot;</span>,name.replaceAll(<span class="string">&quot;.&quot;</span>,<span class="string">&quot;/&quot;</span>).concat(<span class="string">&quot;.class&quot;</span>)); <span class="comment">//待加载类所在路径</span></span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="type">FileInputStream</span> <span class="variable">fis</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(f);</span><br><span class="line">            <span class="type">ByteArraryOutputStream</span> <span class="variable">baos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArrayOutputStream</span>();</span><br><span class="line">            <span class="type">int</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> ((b = fis.read()) != <span class="number">0</span>)&#123;</span><br><span class="line">                baos.write(b);<span class="comment">//写入字节流</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="type">byte</span>[] bytes = baos.toByteArray();<span class="comment">//转化为字节数组</span></span><br><span class="line">            baos.close();</span><br><span class="line">            fis.close();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> defineClass(name,bytes,<span class="number">0</span>,bytes.length);</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            e.printStrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>.findClass(name);<span class="comment">//找不到再调用父类</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//加载完所需类clazz后，用反射创建实例</span></span><br><span class="line"><span class="type">ClassLoader</span> <span class="variable">l</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">zidingyiClassLoader</span>();</span><br><span class="line"><span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> l.findClass(<span class="string">&quot;路径&quot;</span>);</span><br><span class="line"><span class="comment">//假设加载的为Hello类</span></span><br><span class="line"><span class="type">Hello</span> <span class="variable">h</span> <span class="operator">=</span> (Hello)clazz.newInstance();</span><br><span class="line"><span class="comment">//这样就创建了加载类的一个实例</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="编译器"><a href="#编译器" class="headerlink" title="编译器"></a>编译器</h3><h4 id="混合模式"><a href="#混合模式" class="headerlink" title="混合模式"></a>混合模式</h4><blockquote>
+<p>解释器（bytecode intepreter）</p>
+<p>JIT(Just In-Time compiler)</p>
+</blockquote>
+<ol>
+<li><p>混合使用解释器+热点代码编译</p>
+</li>
+<li><p>起始阶段解释执行</p>
+</li>
+<li><p>热点代码检测</p>
+<ul>
+<li><p>多次被调用的方法（方法计数器：检测方法执行频率）</p>
+</li>
+<li><p>多次被调用的循环（循环计数器：检测循环执行频率）</p>
+</li>
+<li><p>进行编译（即解释时发现某方法或循环执行次数很多就将其编译为本地代码）</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>-Xmixed 默认为混合模式</p>
+<p>-Xint 使用纯解释模式，启动很快，执行稍慢</p>
+<p>-Xcomp 使用纯编译模式，执行很快，启动很慢</p>
+<h3 id="懒加载（lazyloading）"><a href="#懒加载（lazyloading）" class="headerlink" title="懒加载（lazyloading）"></a>懒加载（lazyloading）</h3><blockquote>
+<p>实际是在需要时初始化（initializing）</p>
+</blockquote>
+<p>何时必须初始化</p>
+<ul>
+<li>遇到<strong>new,getstatic,putstatic,invokestatic</strong>字节码指令，访问final变量除外(使用<strong>new</strong>关键字实例化对象的时候读取或设置一个类的静态字段(被final修饰、已在编译期把结果放入常量池的静态字段除外)的时候调用一个类的静态方法的时候)</li>
+<li>java.lang.reflect对类进行反射调用时</li>
+<li>初始化子类时，父类首先初始化</li>
+<li>虚拟机启动时，被执行的主类必须初始化</li>
+<li>动态语言支持java.lang.invoke.MethodHandle解析的结果为REF_getstatic,REF_putstatic,REF_invokestatic的方法句柄时，该类必须初始化</li>
+<li>当一个接口中定义了JDK8新加入的默认方法(被default关键字修饰的接口方法)时,如果这个接口的实现类发生了初始化,那么该接口要在其之前初始化</li>
+</ul>
+<p><img src="C:\Users\14660\Desktop\笔记\类结构.png"></p>
+<h3 id="Linking"><a href="#Linking" class="headerlink" title="Linking"></a>Linking</h3><ul>
+<li>Verification:验证文件是否符合JVM规定</li>
+<li>Preparation:<strong>静态成员变量赋默认值</strong></li>
+<li>Resolution（解析）:将类、方法、属性等符号引用解析为直接引用（指向内存地址）–常量池中的各种符号引用解析为指针、偏移量等内存地址的直接引用</li>
+</ul>
+<h3 id="Initializing"><a href="#Initializing" class="headerlink" title="Initializing"></a>Initializing</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        System.out.println(T.count);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">T</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">T</span> <span class="variable">t</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">T</span>();<span class="comment">//null</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">2</span>;<span class="comment">//0</span></span><br><span class="line">    <span class="comment">/*上边两句换顺序，打印出来结果不同</span></span><br><span class="line"><span class="comment">    </span></span><br><span class="line"><span class="comment">    public static T t = new T();//null -&gt; T(),count=1</span></span><br><span class="line"><span class="comment">    public static int count = 2;//0 -&gt; 2</span></span><br><span class="line"><span class="comment">    1.Preparation阶段，count=0,T()=null,</span></span><br><span class="line"><span class="comment">    初始化，T()count++后为1，count初始化为2</span></span><br><span class="line"><span class="comment">    </span></span><br><span class="line"><span class="comment">    public static int count = 2;//0 -&gt;2</span></span><br><span class="line"><span class="comment">    public static T t = new T();//null -&gt;T().count=3</span></span><br><span class="line"><span class="comment">    2.Preparation阶段，count=0,T()=null,</span></span><br><span class="line"><span class="comment">    初始化，count初始化为2，T()count++后为3*/</span></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">T</span><span class="params">()</span>&#123;</span><br><span class="line">        count++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>load - 默认值 - 初始值</p>
+<p>new - 申请内存 - 默认值 - 初始值</p>
+</blockquote>
+<h2 id="内存模型-JMM"><a href="#内存模型-JMM" class="headerlink" title="内存模型(JMM)"></a>内存模型(JMM)</h2><h3 id="java内存区域"><a href="#java内存区域" class="headerlink" title="java内存区域"></a>java内存区域</h3><p><img src="C:\Users\14660\Desktop\笔记\内存区域.png"></p>
+<h3 id="硬件层数据一致性"><a href="#硬件层数据一致性" class="headerlink" title="硬件层数据一致性"></a>硬件层数据一致性</h3><p>多线程load一块数据时</p>
+<p><img src="C:\Users\14660\Desktop\笔记\硬件层数据一致性.png"></p>
+<p>以上图x为例，加载到左边和右边处理不同会导致x的不一致性</p>
+<ul>
+<li><p>老的cpu会在加载时将主线锁住，只允许一个cpu进行访问，但这样效率低下，而且其他cpu甚至不能访问内存中的其他地址</p>
+</li>
+<li><p>MESI Cache一致性协议（英特尔的，还有很多其他协议）</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>M</strong>odeified:修正，<strong>E</strong>xclusive:否决，<strong>S</strong>hared：参与，<strong>I</strong>nvalid:无效，代表缓存行（即上图L）的四个状态</p>
+</blockquote>
+<p>M：代表该缓存行的内容<strong>被修改了</strong>，且只缓存在当前CPU中，与内存中的数据不同，在未来某一时刻会被写入内存（当其他CPU要读取或修改该内容时）</p>
+<p>E：代表该缓存行对应内存中的内容<strong>只被该CPU缓存独享</strong>，其他CPU没有缓存该内容，这个状态的缓存行内容与内存中的一致，该缓存可以在任何其他CPU读取该缓存对应内存中的内容时变成S状态。或者本地处理器写该缓存就会变成M状态。</p>
+<p>S：该状态意味着数据不止存在本地CPU缓存中，<strong>还存在别的CPU的缓存中分享</strong>。这个状态的数据和内存中的数据是一致的。当有一个CPU修改该缓存行对应的内存的内容时会使该缓存行变成 I 状态。</p>
+<p>I：读的时候被别的CPU改过，代表该缓存行中的内容时无效的。</p>
+<p><strong>local read</strong>和local write分别代表本地CPU读写。<strong>remote read</strong>和<strong>remote write</strong>分别代表其他CPU读写。</p>
+<p><img src="C:\Users\14660\Desktop\笔记\MESI.png"></p>
+<blockquote>
+<p>现代CPU数据一致性实现：<strong>缓存锁加上总线锁</strong></p>
+</blockquote>
+<p>缓存行：读取缓存以cache line 为基本单位，多数为64Byte</p>
+<p>伪共享：位于同一缓存行的两不同数据，被两个不同CPU锁定，产生互相影响的伪共享问题</p>
+<blockquote>
+<p>缓存行对齐可以提高效率</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">long</span> p1,p2,p3,p4,p5,p6,p7;<span class="comment">//cache line padding</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="type">long</span> <span class="variable">cur</span> <span class="operator">=</span> INITIAL_CUR;</span><br><span class="line"><span class="keyword">public</span> <span class="type">long</span> p8,p9,p10,p11,p12,p13,p14;<span class="comment">//cache line padding</span></span><br><span class="line"><span class="comment">/*保证所需数据不在一个缓存行解决伪共享*/</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="乱序问题"><a href="#乱序问题" class="headerlink" title="乱序问题"></a>乱序问题</h3><p><strong>cpu为了提高指令执行效率，会在一条指令执行过程中，去同时执行另一条指令，前提是，两条指令没有依赖关系</strong></p>
+<p>写操作也可以进行合并，cpu有一个合并写缓存WCBuffer（速度极快），一般只有四个位置，填满后一次性执行</p>
+<blockquote>
+<p>如果每次操作四个以内速度会很快，负责会等待填满</p>
+</blockquote>
+<p>volatile软件层面保证有序</p>
+<h4 id="硬件层面保证有序"><a href="#硬件层面保证有序" class="headerlink" title="硬件层面保证有序"></a>硬件层面保证有序</h4><p>加内存屏障（intel）</p>
+<ul>
+<li>sfence:在sfence指令前的写操作当必须在sfence指令后的写操作前完成</li>
+<li>Ifence：在Ifence指令前的读操作当必须在Ifence指令后的读操作前完成</li>
+<li>mfence：在mfence指令前的读写操作当必须在mfence指令后的读写操作前完成</li>
+</ul>
+<p>JVM级别的有序性不止依赖于硬件级别内存屏障也以来于JVM汇编指令Lock。</p>
+<h2 id="GC（Garbage-Collector）"><a href="#GC（Garbage-Collector）" class="headerlink" title="GC（Garbage Collector）"></a>GC（Garbage Collector）</h2><p><img src="C:\Users\14660\Desktop\笔记\计算机结构.png"></p>
+<h3 id="垃圾的来源"><a href="#垃圾的来源" class="headerlink" title="垃圾的来源"></a>垃圾的来源</h3><blockquote>
+<p>栈是自动释放的，而堆不会自动释放，必须手动管理</p>
+</blockquote>
+<p>最难调试的BUG</p>
+<p><strong>野指针</strong>（java引用）</p>
+<ul>
+<li>同一个对象，两个指针，<strong>一个释放了，另外一个不知道还拿来用</strong></li>
+<li>同一个指针，不同位置</li>
+<li>不再指向任何对象的指针</li>
+<li>NullPointerExcetion</li>
+</ul>
+<p><strong>并发问题</strong></p>
+<ul>
+<li>多个线程访问一个内存空间</li>
+</ul>
+<p><strong>内存泄漏</strong>（menory leak）</p>
+<ul>
+<li>忘记释放会使新的访问需求无法访问没有释放的内存空间，造成内存泄漏。<strong>泄漏过多容易造成内存溢出</strong>，即整个内存空间都无法满足新的需求，被一个个“洞”占满了</li>
+</ul>
+<p><strong>释放多次</strong>（多线程时）</p>
+<ul>
+<li>一个线程空间莫名其妙被另一个线程释放</li>
+</ul>
+<h3 id="什么是垃圾及定位"><a href="#什么是垃圾及定位" class="headerlink" title="什么是垃圾及定位"></a>什么是垃圾及定位</h3><p>没有引用指向的就是垃圾</p>
+<p>定位方式</p>
+<ul>
+<li><p>引用计数法计数器为0引用它的定位为垃圾（python），但几个引用互相指向时（循环引用）无法定位</p>
+</li>
+<li><p>&#96;&#96;&#96;java<br>public class ReferenceCountingGC{<br>public Object instance &#x3D; null;<br>private static final int _1MB &#x3D; 1024<em>1024;&#x2F;&#x2F;占内存，便于观察垃圾回收<br><br>private byte[] bigSize &#x3D; new byte[2</em>_1MB];<br><br>public static void testGC(){<br>    ReferenceCountingGC objA &#x3D; new ReferenceCountingGC();<br>    ReferenceCountingGC objB &#x3D; new ReferenceCountingGC();<br>    objA.instance &#x3D; objB;<br>    objB.instance &#x3D; objA;<br><br>    objA &#x3D; null;<br>    objB &#x3D; null;<br><br>}<br>}</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">![](C:\Users\14660\Desktop\笔记\垃圾.png)</span><br><span class="line"></span><br><span class="line">- Root Searching(根可达)</span><br><span class="line"></span><br><span class="line">没有root与之关联的定位为垃圾（java）</span><br><span class="line"></span><br><span class="line">![](C:\Users\14660\Desktop\笔记\Root Searching.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">**GC roots**：虚拟机栈中引用的对象；方法区中类静态属性引用的对象；方法区中常量引用的对象；本地方法栈中JNI（Native方法）引用的对象；基本数据类型对应的Class对象，常驻的异常对象，系统类加载器；被同步锁（synchronized关键字）持有的对象；反映Java虚拟机内部情况的JMXBean、JVMTI中注册的回调、本地代码缓存等。</span><br><span class="line"></span><br><span class="line">### GC算法</span><br><span class="line"></span><br><span class="line">- Mark-Sweep(标记清除)</span><br><span class="line"></span><br><span class="line">标记为垃圾后，将其清除，从而允许被新的需求访问</span><br><span class="line"></span><br><span class="line">![](C:\Users\14660\Desktop\笔记\Mark-Sweep.png)</span><br><span class="line"></span><br><span class="line">缺点：碎片化严重</span><br><span class="line"></span><br><span class="line">- Copying(拷贝)</span><br><span class="line"></span><br><span class="line">将待回收区域分为两块，一半有垃圾和存活对象，另一半都是未使用的，将存活对象**拷贝**到未使用区域并排列整齐，然后将垃圾存在的一边整体回收</span><br><span class="line"></span><br><span class="line">![](C:\Users\14660\Desktop\笔记\GC_Copying.png)</span><br><span class="line"></span><br><span class="line">缺点：浪费内存</span><br><span class="line"></span><br><span class="line">- Mark_Compact(标记压缩)</span><br><span class="line"></span><br><span class="line">在回收时顺带整理内存</span><br><span class="line"></span><br><span class="line">![](C:\Users\14660\Desktop\笔记\Mark-Compact.png)</span><br><span class="line"></span><br><span class="line">缺点：效率很低</span><br><span class="line"></span><br><span class="line">&gt; 三种算法综合运用诞生了许多垃圾回收器</span><br><span class="line"></span><br><span class="line">### Carbage Collectors</span><br><span class="line"></span><br><span class="line">![](C:\Users\14660\Desktop\笔记\GC.png)</span><br><span class="line"></span><br><span class="line">&gt; 随着内存大小增长演进</span><br><span class="line"></span><br><span class="line">#### 堆内存逻辑分区</span><br><span class="line"></span><br><span class="line">![](C:\Users\14660\Desktop\笔记\堆内存逻辑分区.png)</span><br><span class="line"></span><br><span class="line">一个对象刚new出来，放在**新生代**区，当其经历过阈值次垃圾回收后未被回收则放在老年代，老年代不会每次都扫描了，而新生代则频繁扫描，这样新生代和老年代就可以不同的GC算法，新生代用Copying，老年代用其他两种的组合。</span><br><span class="line"></span><br><span class="line">&gt; 经过工业统计，新生代一次被扫描出来的垃圾占90%，所以Copying算法就没必要一分两半，而是如上图一样划分</span><br><span class="line"></span><br><span class="line">**图中的伊甸园（eden）区第一次扫描到存活对象就拷贝到suivivor1区，然后eden整体回收**，下一次eden与s1区整体扫描。把存活对象拷贝到s2，然后eden和s1整体回收,下一次将eden和s2的存活对象拷贝到s1，依次下去，**s区装不下的就拷贝到老年代**，扫描次数够了也拷贝到老年代，老年代满了会FullGC，整体进行GC。</span><br><span class="line"></span><br><span class="line">#### Serial</span><br><span class="line"></span><br><span class="line">一个**STW**（stop-the-world），使用了一个单线程的Copying GC。工作在年轻代</span><br><span class="line"></span><br><span class="line">&gt; GC线程来了会让其他动作都停止，等GC结束后才开始</span><br><span class="line"></span><br><span class="line">#### Serial Old</span><br><span class="line"></span><br><span class="line">工作在老年代，用mark-sweep-compact。</span><br><span class="line"></span><br><span class="line">&gt; Serial在几兆到几十兆内存使用</span><br><span class="line"></span><br><span class="line">#### Parallel(并行多线程) Scavenge（Ps）</span><br><span class="line"></span><br><span class="line">工作在年轻代的STW</span><br><span class="line"></span><br><span class="line">#### Parallel Old(Po)</span><br><span class="line"></span><br><span class="line">工作在老年代的STW</span><br><span class="line"></span><br><span class="line">&gt; JDK1.8的默认GC组合,工作在几十兆到上百兆一个G</span><br><span class="line"></span><br><span class="line">线程过多，会导致线程切换（Context Switch上下文切换），CPU大量资源会被占用，效率反而降低</span><br><span class="line"></span><br><span class="line">&gt; Ps+Po:“吞吐量优先”收集器，注重吞吐量或处理器资源稀缺时适用，</span><br><span class="line"></span><br><span class="line">**吞吐量：运行用户代码时间/（运行用户代码时间+运行GC时间）**</span><br><span class="line"></span><br><span class="line">#### Concurrent GC</span><br><span class="line"></span><br><span class="line">&gt; 工作在几十G以上</span><br><span class="line"></span><br><span class="line">**GC线程和业务线程可以  同时  并发运行**</span><br><span class="line"></span><br><span class="line">##### CMS（concurrent mark sweep）</span><br><span class="line"></span><br><span class="line">&gt; 工作在老年代，对应年轻代可用Serial或**ParNew**(常用)，以获取最短回收停顿时间为目标。</span><br><span class="line"></span><br><span class="line">四个阶段</span><br><span class="line"></span><br><span class="line">- 初始标记</span><br><span class="line"></span><br><span class="line">找root对象，依然是STW但时间很短</span><br><span class="line"></span><br><span class="line">- 并发标记（三色标记算法）</span><br><span class="line"></span><br><span class="line">从GCroots的直接关联对象开始遍历整个对象图，**业务线程继续**，同时进行标记，**但一定会错标**（标记时以为没有引用，但实则有；标记时不是垃圾，但实际为垃圾）</span><br><span class="line"></span><br><span class="line">- 重新标记</span><br><span class="line"></span><br><span class="line">STW,出错的不会太多，所以也不会特别长。</span><br><span class="line"></span><br><span class="line">- 并发清理</span><br><span class="line"></span><br><span class="line">##### 三色标记算法（并发标记阶段）</span><br><span class="line"></span><br><span class="line">- A黑：自己已标记，它的所有引用也标记，下次不扫描</span><br><span class="line">- B灰：自己已标记，至少有一个引用没标记，下次只扫描引用</span><br><span class="line">- D白：没标记</span><br><span class="line"></span><br><span class="line">对象消失问题：</span><br><span class="line"></span><br><span class="line">- 当B到D的引用消失时，产生浮动垃圾。</span><br><span class="line">- 当B到D的引用消失，并且A指向D的引用增加，此时下次扫描D不会被扫描到，会被当初垃圾清掉。</span><br><span class="line"></span><br><span class="line">针对第一个：原始快照（Snapshot At The Begginning SATB）,C1、Shenandoah使用这种，**当灰色对象要删除指向白色对象的引用关系时将这个删除的引用记录下来，等并发扫描结束后，将记录的引用关系中的灰色对象为根，重新扫描一遍**，即无论引用关系删除与否，都会按照刚刚扫描那一刻的对象关系来进行搜索</span><br><span class="line"></span><br><span class="line">针对第二个：增量更新（Incremental Update）**如果黑色对象指向白色时，以黑色为根重新扫描，也就是将黑色对象换为灰色。**</span><br><span class="line"></span><br><span class="line">Incremental Update的问题，产生漏标，由多线程引起</span><br><span class="line"></span><br><span class="line">当GC线程1标记完A的属性1后，正在标记属性2，属性1指向了白色对象，然后GC线程2会将其标记为灰色，还没来得及扫描孩子，GC线程1会认为所有属性标完，将A设为黑色，**所以CMS的重新标记要重新扫描一遍**，**所以STW时间很长。**</span><br><span class="line"></span><br><span class="line">##### ParNew</span><br><span class="line"></span><br><span class="line">&gt; **专门**用来与CMS配合使用的特殊的Parallel Scavenge</span><br><span class="line"></span><br><span class="line">多线程copyingGC的STW</span><br><span class="line"></span><br><span class="line">##### G1（Garbage First 物理上不分代，逻辑分代）</span><br><span class="line"></span><br><span class="line">&gt; 之前的GC问题：必须扫描整个老年代，慢！年轻代老年代都是独立的，大小必须提前确定</span><br><span class="line"></span><br><span class="line">**Region**分区算法，分代但不连续，年轻代分为Eden和Survivor两个区，老年代分为Old和Humongous两个区。</span><br><span class="line"></span><br><span class="line">&gt; G1把堆内存分为大小相等的内存分段，默认情况下会把内存分为2048个内存分段，可以用-XX:G1HeapRegionSize调整内存分段的个数。比如32G堆内存，2048个内存分段每段的大小为16M。这相当于把内存化整为零。内存分段是物理概念，代表实际的物理内存空间。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 每个内存分段都可以被标记为Eden区，Survivor区，Old区，或者Humongous区。这样属于不同代，不同区的内存分段就可以不必是连续内存空间了。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 新分配的对象会被分配到Eden区的内存分段上，**每一次年轻代的回收过程都会把Eden区存活的对象复制到Survivor区的内存分段上，把Survivor区继续存活的对象年龄加1，如果Survivor区的存活对象年龄达到某个阈值（比如15，可以设置），Survivor区的对象会被复制到Old区**。复制过程是把源内存分段中所有存活的对象复制到空的目标内存分段上，复制完成后，源内存分段没有了存活对象，变成了可以使用的空的Eden内存分段了；**而目标内存分段的对象都是连续存储的，没有碎片，所以复制过程可以达到内存整理的效果，减少碎片**。Humongous区用于保存大对象，如果一个对象占用的空间超过内存分段的一半（比如上面的8M），则此对象将会被分配在Humongous区。如果对象的大小超过一个甚至几个分段的大小，则对象会分配在物理连续的多个Humongous分段上。Humongous对象因为占用内存较大并且连续会被优先回收。</span><br><span class="line"></span><br><span class="line">![](C:\Users\14660\Desktop\笔记\G1.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">##### ZGC（官方支持）</span><br><span class="line"></span><br><span class="line">##### Shenandoah（Open JDK）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">##### Epsilon（JDK11后）</span><br><span class="line"></span><br><span class="line">“什么都不干”，只是记录。</span><br><span class="line"></span><br><span class="line">&gt; 开发JVM做Debug用</span><br><span class="line">&gt;</span><br><span class="line">&gt; 知道内存足够到，则在程序运行时不进行垃圾回收，程序结束后统一回收内存。</span><br><span class="line"></span><br><span class="line">## JVM调优(ps+po基础)</span><br><span class="line"></span><br><span class="line">1. 根据需求进行JVM规划和预调优</span><br><span class="line">2. 优化运行JVM运行环境（怎样定位一个系统的瓶颈？压测）</span><br><span class="line">3. 解决JVM运行过程中的各种问题（Memmory Leak内存泄漏 OOM（out of memmory）内存溢出）</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">java -Xms200M -Xmx200M -XX:+PrintGC </span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>-Xms:最小堆内存，-Xmx:最大堆内存，-XX：+PrintGC,打印GC日志。Xms&#x3D;Xmx,防止内存抖动。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">jps:列出所有java进程</span><br><span class="line">jinfo +进程号:进程信息</span><br><span class="line">jstat -gc +进程号 500:内存里每一块区域占有的大小，每500ms刷新</span><br><span class="line">jstack +进程号：将进程里所有线程信息打印</span><br><span class="line">top :当前系统每个进程占用的cpu</span><br><span class="line">top -Hp +进程号：将进程里每个线程占用的cpu</span><br><span class="line">jmap -histo +进程号 | <span class="built_in">head</span> -20：进程中每个类有多少个对象,取前20行,可以查看哪些类的对象没有被回收过。</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>jmap会让JVM卡死（STW），在测试环境压测执行或复制一份到备份机执行也会卡死，所以业务进行中不能用，<strong>应该设置-XX：+HeapDumpOnOutOfMenmoryError,什么时候内存溢出才保存快照分析。</strong></p>
+</blockquote>
+<p>在实际生产环境，业务运行时调优的方法：</p>
+<ul>
+<li>压测环境观察</li>
+<li>做了负载均衡的话，可以把一台机器的文件导出来观察</li>
+<li>TcpCopy复制用户请求，一份给业务运行，一份测试调优</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">jmap -dump:format=b,file=xxxx.hprof +进程号</span><br><span class="line">把JVM的整个堆导出为文件进行分析（可以用java）</span><br></pre></td></tr></table></figure>
+
+<h3 id="ARTHAS"><a href="#ARTHAS" class="headerlink" title="ARTHAS"></a>ARTHAS</h3><p>常用命令：</p>
+<ul>
+<li><p>dashboard：jinfo + top + top -Hp的信息都可以看到</p>
+</li>
+<li><p>headdump:替代jmap</p>
+</li>
+<li><p>thread:-b:查找死锁</p>
+</li>
+<li><p>jvm：将Java进程常用参数怎么设列出来</p>
+</li>
+<li><p>jad:反编译已加载类的源码</p>
+</li>
+<li><p>trace：方法内部调用路径，并输出方法路径每个节点耗时</p>
+<p>。。。</p>
+</li>
+</ul>
+<h2 id="Object-o-x3D-new-Object"><a href="#Object-o-x3D-new-Object" class="headerlink" title="Object o &#x3D; new Object()"></a>Object o &#x3D; new Object()</h2><h3 id="对象创建过程"><a href="#对象创建过程" class="headerlink" title="对象创建过程"></a>对象创建过程</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*对应字节码*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> #<span class="number">2</span> &lt;Object&gt;</span><br><span class="line"><span class="comment">//申请一块内存，成员变量赋默认值,半初始化</span></span><br><span class="line">dup</span><br><span class="line">invokespecial #<span class="number">3</span> &lt;Object.&lt;init&gt;&gt;</span><br><span class="line"><span class="comment">//调用默认构造方法，成员变量赋初始值</span></span><br><span class="line">astore_1</span><br><span class="line"><span class="comment">//将对象o与new的对象建立关联</span></span><br><span class="line"><span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="DCL单例（Double-Check-Lock）需不需要volatile"><a href="#DCL单例（Double-Check-Lock）需不需要volatile" class="headerlink" title="DCL单例（Double Check Lock）需不需要volatile"></a>DCL单例（Double Check Lock）需不需要volatile</h3><p><strong>要加volatile</strong>:线程间可见，禁止重排序</p>
+<p><strong>禁止对某块内存访问的指令的重排序</strong></p>
+<blockquote>
+<p>如果不加volatile,new出对象后，后两句可能会指令重排，对象会指向半初始化的new对象，此时不为空，但会得到半初始化对象，得不到想要的对象</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">new</span> #<span class="number">2</span> &lt;Object&gt;</span><br><span class="line"><span class="comment">//申请一块内存，成员变量赋默认值,半初始化</span></span><br><span class="line">astore_1</span><br><span class="line"><span class="comment">//将对象o与new的半初始化对象建立关联，！=null</span></span><br><span class="line">invokespecial #<span class="number">3</span> &lt;Object.&lt;init&gt;&gt;</span><br><span class="line"><span class="comment">//调用默认构造方法，成员变量赋初始值</span></span><br><span class="line"><span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Double Check Lock</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> Thread;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestSingleton</span> &#123;</span><br><span class="line">    <span class="comment">//饿汉式</span></span><br><span class="line">    <span class="comment">/*private static final TestSingleton INSTANCE = new TestSingleton();</span></span><br><span class="line"><span class="comment">    private TestSingleton() &#123;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">    public TestSingleton getInstance()&#123;</span></span><br><span class="line"><span class="comment">        return INSTANCE;</span></span><br><span class="line"><span class="comment">    &#125;*/</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//为提高效率，需要时创建，但线程不安全，引入DCL,Double Check Lock,双重检查，避免线程不安全</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> TestSingleton <span class="keyword">volatile</span> INSTANCE;</span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">TestSingleton</span><span class="params">()</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">public</span> TestSingleton <span class="title function_">getInstance</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">//第一次判断为了提高效率</span></span><br><span class="line">        <span class="keyword">if</span>(INSTANCE == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (TestSingleton.class)&#123;</span><br><span class="line">                <span class="comment">//这里如果不检查，依然会出现线程不安全</span></span><br><span class="line">                <span class="keyword">if</span>(INSTANCE ==  <span class="literal">null</span>)&#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Thread.sleep(<span class="number">1</span>);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                    INSTANCE = <span class="keyword">new</span> <span class="title class_">TestSingleton</span>();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&#x3D;&#x3D;极端情况DCL依然不安全，new一个对象不是原子性操作，有三步&#x3D;&#x3D;</p>
+<ol>
+<li>分配内存空间</li>
+<li>执行构造方法，初始化对象</li>
+<li>把对象指向这个空间</li>
+</ol>
+<p>可能会发生<strong>指令重排</strong>，线程A执行顺序若为132，则执行到第二部若线程B来了，会认为对象已经创建，会返回对象，发生错误。<strong>所以要用volatile禁止指令重排。</strong></p>
+<h3 id="对象的定位"><a href="#对象的定位" class="headerlink" title="对象的定位"></a>对象的定位</h3><p><img src="C:\Users\14660\Desktop\笔记\对象定位.png"></p>
+<p>HotSpot VM用第二种</p>
+<blockquote>
+<p>直接指针效率更高，但在GC复制时，t也要改变</p>
+<p>句柄（指针的指针）方式对象小，方便GC，在GC复制时，t不需要修改，只改变实例数据指针</p>
+</blockquote>
+<h3 id="对象怎么分配"><a href="#对象怎么分配" class="headerlink" title="对象怎么分配"></a>对象怎么分配</h3><p>先看能否分配在栈上，不存在逃逸（只在方法中，没有其他对象可以访问）的对象可以分配在栈上，GC效率极高，pop即可（Xss可以设置最大栈大小，调优。）对象生命周期也就结束了</p>
+<p>如果不能在栈上分配：</p>
+<p>若对象很大，放在老年代，经过FullGC回收，生命结束；</p>
+<p>若对象不大，分配到TLAB（Thread Local Allocation Buffer 线程本地分配缓冲区，位于Eden,避免指针碰撞（Bump-the-pointer）耗费资源），TLAB放不下，放在Eden,Minor GC回收，生命结束，MinorGC未回收进入survival1、survival2循环，年龄够进OLD，FullGC回收；</p>
+<p><img src="C:\Users\14660\Desktop\笔记\堆内存分配.png"></p>
+<h3 id="Class对象在堆还是方法区"><a href="#Class对象在堆还是方法区" class="headerlink" title="Class对象在堆还是方法区"></a>Class对象在堆还是方法区</h3><p>method Area是接口，下两个是实现类</p>
+<ul>
+<li>perm Genaration，JDK1.7之前</li>
+<li>Meta Space</li>
+</ul>
+<p>JDK1.6在方法区，1.7之后存在堆，方便拿出来做反射。<strong>类的元数据（元数据并不是类的Class对象。Class对象是加载的最终产品，类的方法代码，变量名，方法名，访问权限，返回值等等都是在方法区的）才是存在方法区的。</strong></p>
+<p><img src="C:\Users\14660\Desktop\笔记\1.8之前Class对象存在堆.png"></p>
+<p>instanceClassOop只包含数据信息（对象的内存分布）</p>
+<ul>
+<li>对象头，也叫Mark Word，主要存储对象运行时记录信息，如hashcode, GC分代年龄，锁状态标志，线程ID，时间戳等;</li>
+<li>元数据指针，即指向方法区的instanceKlass实例</li>
+<li>实例数据;</li>
+<li>另外，如果是数组对象，还多了一个数组长度</li>
+</ul>
+<p>方法区存放：Klass<strong>元数据信息</strong>、每个类的运行时<strong>常量池</strong>、编译后的代码</p>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+</search>
