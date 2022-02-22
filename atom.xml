@@ -18,8 +18,8 @@
   
   <entry>
     <title>first hexo blog</title>
-    <link href="https://lxinnn.github.io/java/first-hexo-blog"/>
-    <id>https://lxinnn.github.io/java/first-hexo-blog</id>
+    <link href="https://lxinnn.github.io/java/first-hexo-blog/"/>
+    <id>https://lxinnn.github.io/java/first-hexo-blog/</id>
     <published>2022-02-21T14:12:38.709Z</published>
     <updated>2022-02-22T08:38:30.785Z</updated>
     
@@ -43,8 +43,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="https://lxinnn.github.io/guide/hello-world"/>
-    <id>https://lxinnn.github.io/guide/hello-world</id>
+    <link href="https://lxinnn.github.io/guide/hello-world/"/>
+    <id>https://lxinnn.github.io/guide/hello-world/</id>
     <published>2022-02-21T07:30:22.304Z</published>
     <updated>2022-02-22T08:03:11.595Z</updated>
     
